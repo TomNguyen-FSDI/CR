@@ -59,7 +59,7 @@ def serialize_data():
         writer = open('songMngr.data', 'wb')  # wb = write binary
         pickle.dump(catalog, writer) #get infomation from memory and dump it into this file
         writer.close()
-        print("** Data serialized!")
+        # print("** Data serialized!")
     except:
         print("** Error, data not saved")
 
@@ -165,7 +165,7 @@ def print_songs():
     the_album = find_album(album_id)
 
     if(the_album == False):
-        return
+        return False
     elif(len(the_album.songs) <= 0):
         print("\n No Tracks in this album.")
     else:
@@ -252,12 +252,22 @@ def change_song_title():
     Then ask for a new input for the title
     """
     print_header("Change song title")
-    print_songs()
+    if(print_songs() == False):
+        print("\nWas not a valid album choice. Try again.")
+        return
     global albumid
     track_id = validate_input("int", "Please pick the song track: ")
     the_album = find_album(albumid)
-    new_song_title = input("\nEnter new song title: ")
-    the_album.songs[track_id - 1].title=new_song_title
+    length_of_songs = len(the_album.songs)
+    if( length_of_songs == 0):
+        print("\nThere are no songs title here to change")
+        return
+    elif (length_of_songs < track_id):
+        print("\nThat track doesn't exist")
+        return
+    else:
+        new_song_title = input("\nEnter new song title: ")
+        the_album.songs[track_id - 1].title=new_song_title
 
 
 deserialize_data()
