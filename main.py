@@ -221,7 +221,7 @@ def most_expensive_album():
     album_title = catalog[0].title
     for album in catalog:
         if(most_expensive < album.price):
-            most_expensive = album.prices
+            most_expensive = album.price
             album_title = album.title
             album_id = album.id
     # all_price.append(album.price)
